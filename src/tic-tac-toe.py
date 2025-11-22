@@ -36,4 +36,8 @@ def square_button_action(event):
 for row in square_button:
     for button in row: button.bind("<Button-1>", square_button_action)
 
+def restart_button_action():
+    for row in square_button:
+        for button in row: button.config(text='')
+restart_button.config(command=restart_button_action)
 window.mainloop()
