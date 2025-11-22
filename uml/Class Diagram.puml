@@ -1,70 +1,78 @@
 @startuml Class Diagram Tic-Tac-Toe
 title Class Diagram Tic-Tac-Toe Game
 package Widgets {
-    class TitleLabel {
-        text
+    class Title_Label {
+        text: Text
     }
-    class SquareButton {
-        text
+    class Square_Button {
+        text: Text
+        color: Color
         on_button_click()
     }
-    class RestartButton {
-        text
+    class Restart_Button {
+        text: Text
         on_button_click()
     }
 
-    ' TitleLabel -down[hidden]- SquareButton
-    ' SquareButton -down[hidden]- RestartButton 
+    ' Title_Label -down[hidden]- Square_Button
+    ' Square_Button -down[hidden]- Restart_Button 
 }
 
 
 
 
-enum SquareState {
+enum Square_State {
     X 
     O 
     M 
 }
-enum GameState {
+enum Game_State {
     Nothing 
     Draw 
     Win 
 }
 class Game {
-    -gameState: GameState
-    -squareState: Matrix<SquareState>
+    -game_state: Game_State
+    -square_states: Matrix<Square_State>
+    -steps: int
+    -turn: Turn
+    -winning_positions: Array<pairs<int>>
+    --
     +reset()
-    +calculate_game_state() : GameState
-    +check_square(): 
+    +get_turn() : Turn
+    +get_game_state() : Game_State
+    +get_square_states(): Matrix<Square_State>
+    +get_winning_positions(): Array<pairs<int>>
+    ..
+    +update_game_state()
+    +update_square_state(int, int)
+    +flip_turn()
 }
-Game -- SquareState
-Game -- GameState
+Game -- Square_State
+Game -- Game_State
 
 enum Turn {
     X
     O
 }
-class Steps {
-    -steps: int
-    -turn: Turn 
-    +reset()
-    +increase()
-}
-Steps -- Turn
+Game -- Turn
 
 
-Game ..> Steps : reset()
-RestartButton ..> Game : reset()
-RestartButton ..>"*" SquareButton : reset()
-RestartButton ..> TitleLabel : reset()
+Restart_Button ..> Game : reset()
+Restart_Button ..> Game : get_turn()
 
-SquareButton "*"..> Game : calculate()
-SquareButton "*"..> Game : check_square()
-SquareButton <.. Game : setText()
-Game ..> Steps : increase()
+Square_Button "*"..> Game : get_game_state()
+Square_Button "*"..> Game : get_turn()
+Square_Button "*"..> Game : update_square_state(i, j)
+Square_Button "*"..> Game : update_game_state()
+Square_Button "*"..> Title_Label : set_text()
+Square_Button "*"..> Game : get_winning_positions()
+Square_Button "*"..> Square_Button : set_color()
+Square_Button "*"..> Game : flip_turn()
+Square_Button "*"<.. Restart_Button : set_text()
+Square_Button "*"<.. Restart_Button : set_color()
 
-TitleLabel <.. Game : setText() 
-TitleLabel <.. Steps : setText()
+Title_Label <.. Restart_Button : set_text()
 
 ' Widgets -right[hidden]- Game
 ' Widgets -left[hidden]- Steps
