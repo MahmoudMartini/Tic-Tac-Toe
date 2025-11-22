@@ -1,0 +1,72 @@
+@startuml Class Diagram Tic-Tac-Toe
+title Class Diagram Tic-Tac-Toe Game
+package Widgets {
+    class TitleLabel {
+        text
+    }
+    class SquareButton {
+        text
+        on_button_click()
+    }
+    class RestartButton {
+        text
+        on_button_click()
+    }
+
+    ' TitleLabel -down[hidden]- SquareButton
+    ' SquareButton -down[hidden]- RestartButton 
+}
+
+
+
+
+enum SquareState {
+    X 
+    O 
+    M 
+}
+enum GameState {
+    Nothing 
+    Draw 
+    Win 
+}
+class Game {
+    -gameState: GameState
+    -squareState: Matrix<SquareState>
+    +reset()
+    +calculate_game_state() : GameState
+    +check_square(): 
+}
+Game -- SquareState
+Game -- GameState
+
+enum Turn {
+    X
+    O
+}
+class Steps {
+    -steps: int
+    -turn: Turn 
+    +reset()
+    +increase()
+}
+Steps -- Turn
+
+
+Game ..> Steps : reset()
+RestartButton ..> Game : reset()
+RestartButton ..>"*" SquareButton : reset()
+RestartButton ..> TitleLabel : reset()
+
+SquareButton "*"..> Game : calculate()
+SquareButton "*"..> Game : check_square()
+SquareButton <.. Game : setText()
+Game ..> Steps : increase()
+
+TitleLabel <.. Game : setText() 
+TitleLabel <.. Steps : setText()
+
+' Widgets -right[hidden]- Game
+' Widgets -left[hidden]- Steps
+
+@enduml
