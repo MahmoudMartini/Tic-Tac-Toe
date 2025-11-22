@@ -3,6 +3,7 @@ import tkinter as tk
 window = tk.Tk()
 window.title("Tic Tac Toe")
 
+### UI Design
 # Create the title (Label):
 title_label = tk.Label(window, text= "X's turn")
 title_label.grid(row=0, column=1)
@@ -18,5 +19,21 @@ for i in range(3):
 restart_button = tk.Button(window, text= "Restart")
 restart_button.grid(row=4, column=1)
 # print(type(restart_button))
+
+### Logic of the game
+# for row in square_button:
+#     for button in row: print(button.grid_info()["row"], button.grid_info()["column"])
+# button = square_button[0][0]
+# [print(button.grid_info()["row"], button.grid_info()["column"]) for row in square_button for button in row]
+
+def square_button_action(event):
+    button : tk.Button = event.widget
+    print(button.cget('text'))
+    info = button.grid_info()
+    print(info["row"], info["column"])
+    
+    button.config(text='X')
+for row in square_button:
+    for button in row: button.bind("<Button-1>", square_button_action)
 
 window.mainloop()
