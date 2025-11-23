@@ -17,7 +17,8 @@ on_square_button_click():
     if self.text != "" OR game.get_game_state() != 'Nothing':
         return
     self.text = game.get_turn()
-    game.update_square_state(i, j) ??
+    i, j = self.get_position()
+    game.update_square_state(i, j)
     
     game.update_game_state()
     if game.get_game_state() == 'Draw':

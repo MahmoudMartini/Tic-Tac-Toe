@@ -29,6 +29,7 @@ restart_button.grid(row=4, column=1)
 def square_button_action(event):
     button : tk.Button = event.widget
     print(button.cget('text'))
+    if button.cget('text') != '': return
     info = button.grid_info()
     print(info["row"], info["column"])
     
