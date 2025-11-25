@@ -1,7 +1,7 @@
 -------------
 Controller : 
 -------------
-Label title_label
+Label message_label
 Button restart_button
 Matrix<Button> square_buttons
 Game game
@@ -10,22 +10,24 @@ game = Game()
 
 on_restart_button_click():
     game.reset()
-    title_label.text = game.get_turn() + "'s turn"
+    message_label.text = game.get_turn() + "'s turn"
     button.text = "" for button in square_buttons
 
 on_square_button_click():
     if self.text != "" OR game.get_game_state() != 'Nothing':
         return
+    
     self.text = game.get_turn()
+
     i, j = self.get_position()
     game.update_square_state(i, j)
     
     game.update_game_state()
     if game.get_game_state() == 'Draw':
-        title_label.text = "Draw"
+        message_label.text = "Draw"
         for button in square_buttons: button.color = LOSING_COLOR
     if game.get_game_state() == 'Win':
-        title_label.text = game.get_turn() + " Wins!"
+        message_label.text = game.get_turn() + " Wins!"
         indexes = game.get_winning_positions()
         for i,j in indexes:  square_buttons[i][j].color = WINNING_COLOR
 
