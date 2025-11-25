@@ -58,6 +58,9 @@ def square_button_action(event):
         # ONGOING: No action
 
     # Flip the turn:
+    the_game.flip_turn()
+    if the_game.get_game_state() == GameState.ONGOING: 
+        msg = the_game.get_turn().value + "'s turn"
     
     message_label.config(text=msg)
 
