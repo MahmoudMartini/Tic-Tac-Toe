@@ -59,9 +59,9 @@ def square_button_action(event):
 
     # Flip the turn:
     the_game.flip_turn()
-    if the_game.get_game_state() == GameState.ONGOING: 
-        msg = the_game.get_turn().value + "'s turn"
     
+    # Update the message:
+    msg = the_game.get_turn().value + "'s turn"
     message_label.config(text=msg)
 
 for row in square_button:
