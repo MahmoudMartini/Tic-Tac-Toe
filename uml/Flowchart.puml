@@ -1,0 +1,41 @@
+@startuml Flowchart
+title Flowchart: Check board state actions
+
+start
+:Check board state;
+note right
+    Here is a note
+end note
+
+if (Is there a winner?) then (yes)
+    :WIN;
+    :Get Turn; <<load>>
+
+    :Update message; <<output>>
+    :Get winning positions; <<load>>
+    
+    :Update square colors; <<output>>
+    :Flip turns; <<save>>
+
+    stop
+else (no)
+    if (Is board full?) then (yes)
+        :DRAW;
+        :Get Turn; <<load>>
+
+        :Update message; <<output>>
+        :Update squares colors; <<output>>
+        :Flip turns; <<save>>
+
+        stop
+    else (no)
+        :ONGOING;
+        :Flip turn; <<save>>
+
+        :Get turn; <<load>>
+        
+        :Update message; <<output>>
+        stop
+    endif
+endif
+@enduml

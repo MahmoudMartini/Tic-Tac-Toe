@@ -53,9 +53,9 @@ def square_button_action(event):
 
     # Update the game's state:
     # Check the game's state: 
-        # DRAW: Update the message and squares colors
-        # WIN: Update the message, get winning positions, and update square colors
-        # ONGOING: No action
+        # DRAW: Update the message and squares colors, then flip turns
+        # WIN: Update the message, get winning positions, and update square colors, then flip turns
+        # ONGOING: flip the turn, then update the message
     print(the_game.get_game_state().value)
 
     # Flip the turn:
