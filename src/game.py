@@ -12,19 +12,25 @@ class Game_State(Enum):
     WIN = 'Win'
 
 class Game:
-    ## Constructor to reset the game
+    ## Reset logic:
+    def reset(self):
+        self.game_state = Game_State.ONGOING
     def __init__(self):
         self.turn = Turn.X  # 'X' starts first
-        self.game_state = Game_State.ONGOING
+        self.reset()
 
-    ## Turns:
+    ## Turns logic:
     def get_turn(self):
         return self.turn
     
     def flip_turn(self):
         self.turn = Turn.O if self.turn == Turn.X else Turn.X
 
-    ## Game State:
+    ## Game State logic:
     def get_game_state(self):
         return self.game_state
     
+    def update_game_state(self):
+        return
+    
+    ## Square State logic:

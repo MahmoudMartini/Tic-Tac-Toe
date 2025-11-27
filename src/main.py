@@ -73,6 +73,7 @@ for row in square_button:
 ## Functionality of the restart button:
 def restart_button_action():
     # Reset the current game:
+    the_game.reset()
 
     # Clear the board view:
     for row in square_button:
