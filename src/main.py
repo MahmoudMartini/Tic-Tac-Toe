@@ -42,7 +42,7 @@ def square_button_action(event):
 
     # Set the square's view:
     txt = the_game.get_turn().value
-    print(txt)
+    print(the_game.get_turn())
     button.config(text=txt)
     
     # Get the square's position
@@ -59,7 +59,7 @@ def square_button_action(event):
     # Check the game's state: 
     print(the_game.get_game_state())
     message = ""
-     #  DRAW: Update the message and squares colors, then flip turns
+    print("step #" + str(the_game.steps))
     
      #  WIN: Update the message, get winning positions, and update square colors, then flip turns
     if the_game.get_game_state() == Game_State.WIN:
@@ -67,6 +67,10 @@ def square_button_action(event):
         print("message:", message)
         winning_positions = the_game.get_winning_positions()
         print(winning_positions)
+     
+     #  DRAW: Update the message and squares colors, then flip turns
+    elif the_game.get_game_state() == Game_State.DRAW:
+        message = "Draw"
 
     # Flip the turn:
     the_game.flip_turn()

@@ -20,7 +20,8 @@ class Game:
     def reset(self):
         self.game_state = Game_State.ONGOING
         self.square_states = [[Square_State.EMPTY for _ in range(3)] for _ in range(3)]
-        self.winning_positions = []
+        self.winning_positions = [] 
+        self.steps = 0
     def __init__(self):
         self.turn = Turn.X  # 'X' starts first
         self.reset()
@@ -39,10 +40,7 @@ class Game:
     def get_winning_positions(self):
         return self.winning_positions
     
-    def update_game_state(self):
-        # Check DRAW state:
-
-        # Check WIN state:
+    def check_win_state(self):
         mat = self.square_states
         row = [False]*3
         col = [False]*3
@@ -63,9 +61,19 @@ class Game:
         if indeces:
             self.game_state = Game_State.WIN
             self.winning_positions = indeces
-        # Else: ONGOING
-        
-        return (col, row, diag)
+            return True
+        return False
+    
+    def check_draw_state(self):
+        if self.steps >= 9:
+            self.game_state = Game_State.DRAW
+            return True
+        return False
+    
+    def update_game_state(self):
+        self.steps += 1
+        if not self.check_win_state():
+            self.check_draw_state()
     
     ## Square State logic:
     def get_square_states(self):
