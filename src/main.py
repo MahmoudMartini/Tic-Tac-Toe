@@ -1,5 +1,5 @@
 #### src/main.py ####
-## Main code for a Tic-Tac-Toe game controller with a Tkinter UI. (MVC pattern)
+### Main code for a Tic-Tac-Toe game controller with a Tkinter UI. (MVC pattern)
 import tkinter as tk
 from game import *
 
@@ -11,8 +11,8 @@ window.title("Tic Tac Toe")
 ### UI Design ###
 
 ## Initialize the message (Label):
-msg = the_game.get_turn().value + "'s turn"
-message_label = tk.Label(window, text=msg)
+message = the_game.get_turn().value + "'s turn"
+message_label = tk.Label(window, text=message)
 message_label.grid(row=0, column=1)
 
 ## Initialize the board (buttons):
@@ -36,7 +36,8 @@ def square_button_action(event):
     print(button.cget('text'))
     
     # Return if the press is not valid:
-    if button.cget('text') != '':
+    print(the_game.get_game_state(), the_game.get_turn())
+    if button.cget('text') != '' or the_game.get_game_state() != Game_State.ONGOING:
         return
 
     # Set the square's view:
@@ -50,20 +51,32 @@ def square_button_action(event):
     print(i, j)
     
     # Set the square's state:
+    the_game.update_square_state(i - 1, j)
 
     # Update the game's state:
+    the_game.update_game_state()
+
     # Check the game's state: 
-        # DRAW: Update the message and squares colors, then flip turns
-        # WIN: Update the message, get winning positions, and update square colors, then flip turns
-        # ONGOING: flip the turn, then update the message
-    print(the_game.get_game_state().value)
+    print(the_game.get_game_state())
+    message = ""
+     #  DRAW: Update the message and squares colors, then flip turns
+    
+     #  WIN: Update the message, get winning positions, and update square colors, then flip turns
+    if the_game.get_game_state() == Game_State.WIN:
+        message = the_game.get_turn().value + " Wins"
+        print("message:", message)
+        winning_positions = the_game.get_winning_positions()
+        print(winning_positions)
 
     # Flip the turn:
     the_game.flip_turn()
     
+     #  ONGOING: flip the turn, then update the message
+    if the_game.get_game_state() == Game_State.ONGOING:
+        message = the_game.get_turn().value + "'s turn"
+    
     # Update the message:
-    msg = the_game.get_turn().value + "'s turn"
-    message_label.config(text=msg)
+    message_label.config(text=message)
 
 for row in square_button:
     for button in row: 
@@ -80,8 +93,8 @@ def restart_button_action():
         for button in row: button.config(text='')
     
     # Show Who's turn:
-    msg = the_game.get_turn().value + "'s turn"
-    message_label.config(text=msg)
+    message = the_game.get_turn().value + "'s turn"
+    message_label.config(text=message)
 
 restart_button.config(command=restart_button_action)
 

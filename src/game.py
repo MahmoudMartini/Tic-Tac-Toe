@@ -40,6 +40,9 @@ class Game:
         return self.winning_positions
     
     def update_game_state(self):
+        # Check DRAW state:
+
+        # Check WIN state:
         mat = self.square_states
         row = [False]*3
         col = [False]*3
@@ -60,6 +63,8 @@ class Game:
         if indeces:
             self.game_state = Game_State.WIN
             self.winning_positions = indeces
+        # Else: ONGOING
+        
         return (col, row, diag)
     
     ## Square State logic:
